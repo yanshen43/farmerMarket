@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Map to locate the farmer. Ke tian
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+    <ui:composition template="template/siteTemplate.xhtml">
+        <!--ui:composition  template="/template/siteTemplate.xhtml"-->
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Map"></h:outputText>
+        </ui:define>
+
+        <ui:define name="editableContent" >
+            <!-- Create the content for this page below -->
+            <div align="left" style="width:97%">
+                <h:outputText value="Check Out after Shopping:" />
+                <p id="demo">The items in the shopping list:</p>
+                <ul border="1">
+                    <script language="javascript" type="text/javascript">
+                        var selectedGoods = localStorage.getItem('cart');
+                        if (selectedGoods)
+                        {
+                        //alert("hello world "+ selectedGoods);
+                        var res1 = selectedGoods.toString().split('  ');
+                        var res = res1.filter(function(elem, index, self) {
+                        return index == self.indexOf(elem);
+                        });
+                        console.log(res);
+                        var text = ""; //alert(res.toString());
+                        var i;
+                        for (i = 0; i &lt; res.length; i++) {
+                        document.write('<li>Item: ' + i + ', ID is: '+res[i]+'<br/>');
+                        document.write('<img src="resources/images/farmgoods/goods' + res[i] + '.jpg" height="120px"/>');
+                        document.write(' <form> Quantity: <br/> <input id="text'+res[i]+'" type="text" name="firstname" placeholder="1"> </input> </form> </li>');
+                        }
+                        }
+                    </script>
+                </ul> 
+                <h:panelGrid columns="2" style="float:left">
+                    <button style="height:50px;width:200px" onclick="deleteCart()">Clear products</button>
+                    <button style="height:50px;width:200px" onclick="checkout()" >Check Out products</button>
+                </h:panelGrid>
+
+
+                <script >
+                    function checkout()
+                    {
+                        
+                        var selectedGoods = localStorage.getItem('cart');
+                        if (selectedGoods)
+                        {
+                        //alert("hello world "+ selectedGoods);
+                        var res1 = selectedGoods.toString().split('  ');
+                        var res = res1.filter(function(elem, index, self) {
+                        return index == self.indexOf(elem);
+                        });
+                       
+                        var text = 'You bought these items\n'; //alert(res.toString());
+                        var i;
+                        
+                        for (i = 0; i &lt; res.length; i++) {
+                            
+                                  text = text + 'Item: '+res[i]+ ' with Quantity: ';
+                                  var j= document.getElementById('text'+res[i]).value;
+                                  text = text + j + ' \n';
+                        }
+                        alert(text);
+                        }
+                    }
+                    function deleteCart()
+                    {
+                    localStorage.removeItem('cart');
+                    alert("you delete the cart items, please continue shopping~");
+                    window.location.reload();
+                    }                
+                </script>
+
+            </div>
+        </ui:define>
+        <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+    </ui:composition>
+</html>
+

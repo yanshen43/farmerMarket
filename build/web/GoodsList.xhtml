@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Yanshen Yang on 2016.11.11 
+Copyright © 2016 Yanshen Yang. All rights reserved.
+ke added thr js function
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      >
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Search Results"></h:outputText>
+        </ui:define>
+
+        <ui:define name="editableContent">
+
+            <div align="center" style="width:97%">
+                <!--
+                PrimeFaces Growl displays messages in an overlay. Place p:growl anywhere on your JSF page. 
+                The location of growl in a JSF page does not matter since the messages are displayed
+                as an overlay. The following will display the messages for 5 seconds and then fade away.
+                -->
+                <h:outputText value="#{item.marketName}" />
+                <!--h:form id="form"-->
+                <h:outputLabel class="heading" value="Welcome to&nbsp;#{farmgoodsManager.selected.marketName}&nbsp;&nbsp;&nbsp;&nbsp;"/>
+                <br/>
+                <p:button  onclick="showSummary()" value="Cart Summary &nbsp;" icon="ui-icon-star"></p:button>
+
+                <p:button  onclick="deleteCart()" value=" Cart &nbsp;" icon="ui-icon-star"></p:button>
+                
+                <p:button  outcome="CheckOut" value="CheckOut" icon="ui-icon-star"></p:button>
+                <!--<h:link outcome="CheckOut"><i class="fa fa-arrow-right"></i>&nbsp;CheckOut&nbsp;&nbsp;</h:link>-->
+                <br/>
+                <br/>
+
+                <p:dataGrid var="item" value="#{farmgoodsManager.searchItems}" columns="3" layout="grid"
+                            rows="10" paginator="true" id="products"  rowsPerPageTemplate="20,30,40,50" >
+
+                    <f:facet name="header">
+                        Products Available in the Farm 
+                    </f:facet>
+
+                    <p:panel header="Item: #{item.gid}" style="text-align:center">
+
+                        <h:panelGrid style="width:100%;margin-left: 20px">
+
+                            <h:panelGrid columns="2" style="float:left">
+                                <h:graphicImage name="/images/farmgoods/goods#{item.gid}.jpg" height="120px" style="float:left"/>
+
+                                <h:panelGrid  columns="1" style="float:left">
+                                    <h:outputText value="Name: #{item.GName}" />
+                                    <h:outputText value="Price: $#{item.price}"/>
+                                    <h:outputText value="Category: #{item.category}"/>
+                                    <h:outputText value="Unit: #{item.unit}"/>
+                                    <p:button icon="ui-icon-star" value="Add to cart" onclick="addGoods(#{item.gid})"></p:button>    
+
+                                </h:panelGrid>
+                                <!--p:selectBooleanCheckbox value="#{selectBooleanView.value1}" /-->
+                            </h:panelGrid>
+
+
+
+                        </h:panelGrid>
+                    </p:panel>
+
+                </p:dataGrid> 
+                <!--/h:form-->
+                <script type="text/javascript">
+                    function addGoods(item)
+                    {
+                        var selectedGoods = localStorage.getItem('cart');
+                        if (selectedGoods)
+                        {
+                            selectedGoods = selectedGoods + "  " + item.toString();
+                            localStorage.setItem('cart', selectedGoods);
+
+                        } else
+                        {
+                            selectedGoods = item.toString();
+                            localStorage.setItem('cart', selectedGoods);
+                        }
+
+                        alert("You add this item ID: " + item.toString() + " to the Cart");
+
+                    }
+                    function deleteCart()
+                    {
+                        localStorage.removeItem('cart');
+                        alert("you delete the cart items, please continue shopping~");
+                    }
+                    function showSummary()
+                    {
+                        var selectedGoods = localStorage.getItem('cart');
+                        if (selectedGoods)
+                        {
+                            alert("Cart Summary: " + selectedGoods.toString());
+                        } else {
+                            alert("No items in Cart");
+                        }
+                    }
+                </script>
+            </div>
+        </ui:define>              
+    </ui:composition>
+
+
+
+
+
+
+
+</html>

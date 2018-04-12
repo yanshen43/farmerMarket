@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Yanshen Yang on 2016.11.03 
+Copyright © 2016 Yanshen Yang. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="template/siteTemplate.xhtml">
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <div align="center">
+                <!-- Order online if logged in; otherwise, show the Sign In page 
+                <c:if test="#{accountManager.isLoggedIn() == true}">
+                    <h:button styleClass="button" outcome="PrepareOrder" value="Browse Market" />
+                </c:if>
+                <c:if test="#{accountManager.isLoggedIn() == false}">
+                    <h:button styleClass="button" outcome="SignIn" value="Start Your Order" />
+                </c:if>-->
+                <h:button styleClass="button" outcome="FarmersMarkets" value="Markets and Products" />
+                <br /><br />
+                <!-- 
+                ========================================
+                *   PrimeFaces Galleria UI Component   *
+                ========================================
+                Copied from http://www.primefaces.org/showcase/ui/multimedia/galleria.xhtml
+                together with ImagesView.java file. Read its Documentation.
+                -->
+                <p:galleria value="#{imagesView.images}" var="image" panelWidth="500" panelHeight="313" showCaption="false">
+                    <p:graphicImage name="images/galleriaPhotos/#{image}" alt="Image Description for #{image}" 
+                                    title="Welcome to LocalMarkets!"/>
+                </p:galleria>
+            </div>
+        </ui:define>
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>

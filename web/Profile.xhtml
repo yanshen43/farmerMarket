@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Zhen Guo on 2016.11.03 
+Copyright © 2016 Zhen Guo. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="My Account"></h:outputText>
+        </ui:define>
+        <!-- If you wish to add another CSS file:
+           <ui:define name="css">
+               <h:outputStylesheet library="css" name="filename.css" />
+           </ui:define>
+        -->
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center" style="width:70%; margin:0 auto;">
+
+                <h:form id="CustomerViewForm">
+
+                    <h2> #{accountManager.selected.firstName} #{accountManager.selected.lastName}'s Account Profile </h2>
+
+                    <h:graphicImage id="profilePic" class="profilePhoto"
+                                    value="#{accountManager.photoStorageDirectoryName()}#{accountManager.customerPhoto()}" >
+                    </h:graphicImage>
+                    <br />
+
+                    <p:button outcome="EditAccount" value="Edit Profile" icon="ui-icon-pencil"></p:button>
+                    <p:button outcome="ChangePhoto" value="Change Photo" icon="ui-icon-image"></p:button>
+
+                    <p:commandButton id="logOut" type="submit" value="Sign Out" icon="ui-icon-arrowthick-1-w" 
+                                     action="#{accountManager.logout()}" ajax="false" />
+
+                    <!--
+                    AJAX (Asynchronous JavaScript and XML) is a technique that uses HTTPXMLObject of JavaScript to
+                    send data to server and receive data from server asynchronously. When AJAX is used, JavaScript
+                    code exchanges data with server and updates parts of web page without reloading the whole page.
+
+                    ajax="false" means that <p:commandButton> will perform a request/response process without using ajax.
+                    -->
+
+                    <!-- ****************** Delete Account Begin **************************** -->
+
+                    <p:growl id="message" showDetail="true" />
+
+                    <!-- When the user selects YES, 
+                    ConfirmPasswordDialog in the included DeleteAccountDialog.xhtml file is displayed,
+                    and the form with id ConfirmPasswordForm in the included DeleteAccountDialog.xhtml is updated -->
+
+                    <p:commandButton id="delete" value="Delete Account" update=":ConfirmPasswordForm" 
+                                     oncomplete="PF('ConfirmPasswordDialog').show()" icon="ui-icon-trash">
+
+                        <p:confirm header="Account Deletion Confirmation" 
+                                   message="Are you sure to permanently delete your account? This cannot be undone!" 
+                                   icon="ui-icon-alert" />
+                    </p:commandButton>
+
+                    <!-- First, confirmation dialog is displayed to check if user really wants to delete the account.
+                    If the user clicks YES, then ConfirmPasswordDialog is shown in the DeleteAccountDialog.xhtml file
+                    to confirm the deletion by entering password. This provides double layer confirmation. -->
+
+                    <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="YES" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+
+                    <!-- ****************** Delete Account End **************************** -->
+
+                    <br /><br />
+                    <h:button styleClass="button" outcome="FarmersMarkets" value="Browse Markets" />
+                    <br /><br />
+                    <h:panelGroup id="display">
+                        <p:panelGrid columns="2" rendered="#{accountManager.selected != null}" columnClasses="columnOne, columnTwo" >
+
+                            <h:outputText value="#{bundle.ViewCustomerLabel_firstName}"/>
+                            <h:outputText value="#{accountManager.selected.firstName}" />
+                            
+                            <h:outputText value="#{bundle.ViewCustomerLabel_middleName}"/>
+                            <h:outputText value="#{accountManager.selected.middleName}" />
+                            
+                            <h:outputText value="#{bundle.ViewCustomerLabel_lastName}"/>
+                            <h:outputText value="#{accountManager.selected.lastName}" />
+                            
+                            <h:outputText value="#{bundle.ViewCustomerLabel_ccNumber}"/>
+                            <h:outputText value="#{accountManager.selected.ccNumber}" />
+                            
+                            <h:outputText value="#{bundle.ViewCustomerLabel_ccExpires}"/>
+                            <h:outputText value="#{accountManager.selected.ccExpires}" />
+                            
+                            <h:outputText value="#{bundle.ViewCustomerLabel_ccSecurityCode}"/>
+                            <h:outputText value="#{accountManager.selected.ccSecurityCode}" />
+                            
+                            <h:outputText value="#{bundle.ViewCustomerLabel_address1}"/>
+                            <h:outputText value="#{accountManager.selected.address1}" />
+                            
+                            <h:outputText value="#{bundle.ViewCustomerLabel_address2}"/>
+                            <h:outputText value="#{accountManager.selected.address2}" />
+                            
+                            <h:outputText value="#{bundle.ViewCustomerLabel_city}"/>
+                            <h:outputText value="#{accountManager.selected.city}" />
+                            
+                            <h:outputText value="#{bundle.ViewCustomerLabel_state}"/>
+                            <h:outputText value="#{accountManager.selected.state}" />
+                            
+                            <h:outputText value="#{bundle.ViewCustomerLabel_zipcode}"/>
+                            <h:outputText value="#{accountManager.selected.zipcode}" />
+                            
+                            <h:outputText value="#{bundle.ViewCustomerLabel_email}"/>
+                            <h:outputText value="#{accountManager.selected.email}" />
+                            
+                            <h:outputText value="#{bundle.ViewCustomerLabel_username}"/>
+                            <h:outputText value="#{accountManager.selected.username}" />
+
+                        </p:panelGrid>
+
+                    </h:panelGroup>
+                </h:form>
+
+                <ui:include src="DeleteAccountDialog.xhtml"/>
+            </div>
+        </ui:define>
+
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>
+

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Zhen Guo on 2016.10.17 
+Copyright © 2016 Zhen Guo. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Farm Info"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <div align="center">
+
+
+                <div class="farmInfo">
+
+                    <h:outputLabel class="heading" value="Market Name: #{farmgoodsManager.selected.marketName}"/>
+                    <br/><br/> 
+
+                    <img id="keimg" src="resources/images/galleriaPhotos/photo1.jpg" width="500px" height="313px" alt="Image Descr"/>
+                    <br/><br/> 
+
+                    <h:outputLabel class="heading" value="WebSite: #{farmgoodsManager.selected.website}"/>
+                    <br/><br/>   
+
+                    <h:panelGrid columns="2">
+                        <h:outputLabel class="heading" value="Go to FarmerMarket Homepage:&nbsp;"/>
+                        <a href="#{farmgoodsManager.selected.website}">
+                            <img border="0" alt="W3Schools" src="resources/images/home.png" width="30px" height="30px"/>
+                        </a>
+                    </h:panelGrid>
+                    <br/>
+
+                    <h:outputLabel class="heading" value="FamerMarket Unique ID(FMID): #{farmgoodsManager.selected.fmid}"/>
+                    <br/><br/>
+
+                    <h:outputLabel class="heading" value="Facebook: #{farmgoodsManager.selected.facebook}"/>
+                    <br/><br/>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel class="heading" value="Go to Facebook:&nbsp;"/>
+                        <a href="#{farmgoodsManager.selected.facebook}">
+                            <img border="0" alt="W3Schools" src="resources/images/fb.png" width="30px" height="30px"/>
+                        </a>
+                    </h:panelGrid>
+                    <br/>
+
+                    <h:outputLabel class="heading" value="ZipCode: #{farmgoodsManager.selected.zip}"/>
+                    <br/><br/>
+                    <h:outputText class="heading" value="City: #{farmgoodsManager.selected.city}"/>
+                    <br/><br/>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel class="heading" value="Rating:&nbsp;&nbsp;"/>
+                        <p:rating id="kerating" value="2" />
+                        <script type="text/javascript">
+                            var ran2 = Math.floor(Math.random() * 4) + 1;
+                            document.getElementById("kerating").value = 4;
+                        </script>
+                    </h:panelGrid>
+                </div>
+                <br/>
+                <br/>
+
+                <script type="text/javascript">
+                    var randomnumber = Math.floor(Math.random() * 12) + 1;
+                    document.getElementById("keimg").src = "resources/images/galleriaPhotos/photo" + randomnumber.toString() + ".jpg";// + randomnumber + ".jpg";
+                </script>
+                <h:form>
+                    <h:link outcome="FarmersMarkets"><i class="fa fa-arrow-left"></i>&nbsp;Go Back&nbsp;&nbsp;</h:link>
+                    <h:commandLink action="ShowOnMap.xhtml?faces-redirect=true" disabled="#{empty farmgoodsManager.selected}">
+                        <i class="fa fa-map"></i>&nbsp;Show on Map
+                    </h:commandLink>
+                    <br/>
+                    <br/>
+
+                </h:form>
+                <h:form>
+                    <!-->
+                    <p:inputText id="keyword" value="#{goodslistController.setSearchID(1002815)}" 
+                                 required="true" requiredMessage="Please enter a search ID!">
+                    </p:inputText>
+                    <
+                    <p:inputText id="keyword" value="#{goodslistController.searchID}" 
+                                 required="true" requiredMessage="Please enter a search ID!">
+                    </p:inputText>-->
+                    <c:if test="#{accountManager.isLoggedIn() == true}">
+                        <p:commandButton id="viewButton"  icon="ui-icon-document" value="Buy" 
+                                         styleClass="commandButton" 
+                                         action ="GoodsList.xhtml?faces-redirect=true"
+                                         />                        
+                    </c:if>
+                    <c:if test="#{accountManager.isLoggedIn() == false}">
+                        <p:commandButton id="viewButton"  icon="ui-icon-document" value="Buy" 
+                                         styleClass="commandButton" 
+                                         action ="SignIn.xhtml?faces-redirect=true"
+                                         />  
+                    </c:if>
+                     
+                </h:form>
+            </div>
+
+
+
+        </ui:define>
+
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>

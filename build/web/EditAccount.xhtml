@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Yanshen Yang on 2016.11.03 
+Copyright © 2016 Yanshen Yang. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Edit Account"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <div align="center" style="width:50%; margin:0 auto;">
+
+                <!-- Error messages will be shown here if any -->
+                <p:messages id="msgs" showIcon="false"/>
+                <h:outputLabel id="form-error-message" class="errorMessages" value="#{accountManager.statusMessage}"/>
+
+                <h:form id="EditAccountProfileForm">
+
+                    <h2>Edit Account Profile</h2>
+                    <f:event listener="#{accountManager.validatePasswordChange}" type="postValidate"/>
+
+                    <p:panelGrid columns="2" columnClasses="columnOne">
+
+                        <p:outputLabel value="#{bundle.EditCustomerLabel_firstName}" for="firstName" />
+                        <p:inputText id="firstName" value="#{accountManager.selected.firstName}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="#{bundle.EditCustomerRequiredMessage_firstName}" label="First Name">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>   
+
+                        <p:outputLabel value="#{bundle.EditCustomerLabel_middleName}" for="middleName" />
+                        <p:inputText id="middleName" value="#{accountManager.selected.middleName}"
+                                     required="false" styleClass="accountInputTextField" label="Middle Name">
+                        </p:inputText>
+
+                        <p:outputLabel value="#{bundle.EditCustomerLabel_lastName}" for="lastName" />
+                        <p:inputText id="lastName" value="#{accountManager.selected.lastName}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="#{bundle.EditCustomerRequiredMessage_lastName}" label="Last Name">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+                        <p:outputLabel value="#{bundle.EditCustomerLabel_ccNumber}" for="ccNumber" />
+                        <p:inputText id="ccNumber" value="#{accountManager.selected.ccNumber}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="#{bundle.EditCustomerRequiredMessage_ccNumber}" label="Credit Card Number"
+                                     maxlength="19" converterMessage=""
+                                     onfocus="$(this).attr('placeholder', 'Enter max 19 digits');"
+                                     onblur="$(this).attr('placeholder', 'Credit Card Number');">
+                            <f:validator validatorId="ccNumberValidator"/>
+                        </p:inputText>
+
+                        <p:outputLabel value="#{bundle.EditCustomerLabel_ccExpires}" for="ccExpires" />
+                        <p:inputText id="ccExpires" value="#{accountManager.selected.ccExpires}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="#{bundle.EditCustomerRequiredMessage_ccExpires}" label="Credit Card Expiration Date"
+                                     maxlength="4"
+                                     onfocus="$(this).attr('placeholder', 'MMYY');"
+                                     onblur="$(this).attr('placeholder', 'Expiration Date');">
+                            <f:validator validatorId="expirationValidator"/>
+                        </p:inputText>
+
+                        <p:outputLabel value="#{bundle.EditCustomerLabel_ccSecurityCode}" for="ccSecurityCode" />
+                        <p:inputText id="ccSecurityCode" value="#{accountManager.selected.ccSecurityCode}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="#{bundle.EditCustomerRequiredMessage_ccSecurityCode}" 
+                                     label="Credit Card Security Code" 
+                                     maxlength="4"
+                                     onfocus="$(this).attr('placeholder', '1234');"
+                                     onblur="$(this).attr('placeholder', 'Security Code');">
+                            <f:validator validatorId="securityCodeValidator"/> 
+                        </p:inputText>
+
+                        <p:outputLabel value="#{bundle.EditCustomerLabel_address1}" for="address1" />
+                        <p:inputText id="address1" value="#{accountManager.selected.address1}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="#{bundle.EditCustomerRequiredMessage_address1}" label="Address Line 1">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+                        <p:outputLabel value="#{bundle.EditCustomerLabel_address2}" for="address2" />
+                        <p:inputText id="address2" value="#{accountManager.selected.address2}" styleClass="accountInputTextField" label="Address Line 2">
+                        </p:inputText>
+
+                        <p:outputLabel value="#{bundle.EditCustomerLabel_city}" for="city" />
+                        <p:inputText id="city" value="#{accountManager.selected.city}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="#{bundle.EditCustomerRequiredMessage_city}" label="City">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+                        <p:outputLabel value="#{bundle.EditCustomerLabel_state}" for="state" />
+                        <h:selectOneMenu id="state" value="#{accountManager.selected.state}" required="true" >
+                            <f:selectItems value="#{accountManager.listOfStates}" var="state"
+                                           itemLabel="#{state}" itemValue="#{state}" />
+                        </h:selectOneMenu>
+
+                        <p:outputLabel value="#{bundle.EditCustomerLabel_zipcode}" for="zipcode" />
+                        <p:inputText id="zipcode" value="#{accountManager.selected.zipcode}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="#{bundle.EditCustomerRequiredMessage_zipcode}" label="Zip Code" >
+                            <f:validateLength minimum="5" />
+                            <f:validator validatorId="zipCodeValidator"/> 
+                        </p:inputText>
+
+                        <p:outputLabel value="#{bundle.EditCustomerLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{accountManager.selected.email}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="#{bundle.EditCustomerRequiredMessage_email}" label="Email">
+                            <f:validateLength minimum="2" />
+                            <f:validator validatorId="emailValidator" />  
+                        </p:inputText>
+
+                        <h:outputText value="#{bundle.ViewCustomerLabel_username}" />
+                        <h:outputText value="#{accountManager.selected.username}" />
+
+                        <h:outputLabel value="" />
+                        <h:outputLabel value="Fill in Only to Change Password" />
+
+                        <h:outputLabel value="New Password:" for="newPassword" />
+                        <p:password id="newPassword" value="#{accountManager.newPassword}" feedback="true" styleClass="accountInputTextField" >
+                            <!-- Execute the "validate" method in the "PasswordValidator.java" class file to validate the password entered. -->
+                            <f:validator validatorId="passwordValidator" /> 
+                        </p:password>
+
+
+                        <h:outputLabel value="Confirm New Password:" for="newConfirmPassword" />
+                        <p:password id="newConfirmPassword" value="toBeReadFromThisFieldByAccountManager" styleClass="accountInputTextField" />
+
+                    </p:panelGrid>
+
+                    <p:commandButton id="submit" value="Save" action="#{accountManager.updateAccount()}" ajax="false" icon="ui-icon-disk" />
+                    <p:button outcome="Profile" value="Cancel" icon="ui-icon-cancel" />
+
+                </h:form>
+            </div>
+        </ui:define>
+
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>

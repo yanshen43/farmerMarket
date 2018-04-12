@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Zhen Guo on 2016.10.24 
+Copyright © 2016 Zhen Guo. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!--
+    *********************************************
+    * Header Component of Template siteTemplate *
+    *********************************************
+    This page's content is displayed on the top of each page created based on the siteTemplate.
+    Changes made in this file will show up automatically with all pages created based on the
+    siteTemplate for the entire site, achieving great maintainability.
+    -->
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+    <ui:composition>
+        <h:panelGrid columns="2" columnClasses="leftTopCornerAlign, rightTopCornerAlign">
+            <!-- Use absolute path for the image file -->
+            <h:link outcome="index"><img src="resources/images/FM.png" 
+                                         style="width:100%; height:100%; max-height:75px; max-width:270px; border: none"
+                                         alt="Pizza Hut Logo" /></h:link>
+
+            <h:panelGroup>
+                <!-- 
+                =============================================================================
+                * PrimeFaces Menubar UI Component: Horizontal Cascading Navigation Menu Bar *
+                =============================================================================
+                Copied from http://www.primefaces.org/showcase/ui/menu/menubar.xhtml 
+                together with MenuView.java file. Read its Documentation.
+                -->
+                <h:form>
+                    <!-- Welcome the customer if signed in -->
+                    <c:if test="#{accountManager.isLoggedIn() == true}">
+                        <div class="smallText" align="left">Hello, #{accountManager.selected.firstName}</div>
+                    </c:if>
+                    <c:if test="#{accountManager.isLoggedIn() == false}">
+                        <div class="smallText" align="left">Hello, Guest</div>
+                    </c:if>
+
+                    <!--
+                        PrimeFaces Growl displays messages in an overlay. Place p:growl anywhere in your JSF page. 
+                        The location of growl in a JSF page does not matter since the messages are displayed
+                        as an overlay. The following will display the messages for 5 seconds and then fade away.
+                    -->
+                    <p:growl id="messages" life="5000" />
+
+                    <p:menubar>
+                        <!-- The file index.xhtml is at the root level; therefore, we just specify its filename -->
+                        <p:menuitem value="Home" outcome="index" icon="ui-icon-home" ajax="false" />
+                        <!-- 
+                        *** For ease of navigation ***, 
+                        place the Create, Edit, List, View, Search, and SearchResults files at the root level.
+                        The file List.xhtml is at the root level; therefore, we just specify its filename.
+                        -->
+
+
+                        <!-- "Sign In" and "Create an Account" if no user is signed in -->
+                        <!-- "Sign Out" and "My Account" if a user is signed in -->
+                        <c:if test="#{accountManager.isLoggedIn() == true}">
+                            <p:menuitem value="Sign Out" action="#{accountManager.logout()}" icon="ui-icon-arrowthick-1-w" ajax="false" />
+                            <p:menuitem value="My Account" outcome="Profile" icon="ui-icon-person" ajax="false" />
+                        </c:if>
+                        <c:if test="#{accountManager.isLoggedIn() == false}">
+                            <p:menuitem value="Sign In" outcome="SignIn" icon="ui-icon-arrowthick-1-e" ajax="false" />
+                            <p:menuitem value="Create an Account" outcome="CreateAccount" icon="ui-icon-plus" ajax="false" />
+                        </c:if>
+
+                        <!-->  
+                        <p:submenu label="Pizza Hut" icon="ui-icon-heart">
+
+                            <c:if test="#{accountManager.isLoggedIn() == true}">
+                                <p:menuitem value="Order Online" outcome="PrepareOrder" ajax="false" />
+                            </c:if>
+                            <c:if test="#{accountManager.isLoggedIn() == false}">
+                                <p:menuitem value="Order Online" outcome="SignIn" ajax="false" />
+                            </c:if>
+
+                            <p:submenu label="Customer" icon="ui-icon-contact">
+                                <p:menuitem value="Contact Us" url="https://order.pizzahut.com/site/contact_us" />
+                                <p:menuitem value="Find a Pizza Hut" url="https://order.pizzahut.com/site/locator" />
+                                <p:menuitem value="eGift Cards" url="https://pizzahutstore.wgiftcard.com/chrome/pizzahut/" />
+                                <p:menuitem value="FAQs" url="https://order.pizzahut.com/faq-help" />
+                            </p:submenu>
+                            <p:submenu label="Nutrition" icon="ui-icon-info">
+                                <p:menuitem value="Nutrition Information" url="https://order.pizzahut.com/nutrition" />
+                                <p:menuitem value="Gluten Free Pizza" url="https://order.pizzahut.com/glutenfree" />
+                            </p:submenu>
+                            <p:submenu label="Policies" icon="ui-icon-flag">
+                                <p:menuitem value="Privacy Policy" url="https://order.pizzahut.com/privacy-policy" />
+                                <p:menuitem value="Terms of Use" url="https://order.pizzahut.com/site/terms" />
+                                <p:menuitem value="Tracking Tags" url="https://order.pizzahut.com/tracking-tags" />
+                            </p:submenu>
+                        </p:submenu>
+                        <-->
+                        <p:submenu label="Market" icon="ui-icon-folder-open">
+                            <p:menuitem value="Farmer's Market" outcome="FarmersMarkets" icon="ui-icon-person" ajax="false" />
+                            <p:menuitem value="ShowOnMap" outcome="ShowOnMap" icon="ui-icon-person" ajax="false" />
+                            <p:menuitem value="MarketInfo" outcome="MarketInfo" icon="ui-icon-person" ajax="false" />
+                            <p:menuitem value="CheckOut" outcome="CheckOut" icon="ui-icon-person" ajax="false" />
+                            <p:menuitem value="AuthorsInfo" outcome="index" icon="ui-icon-person" ajax="false"/>
+                        </p:submenu>
+
+                    </p:menubar>
+                </h:form>
+
+            </h:panelGroup>
+        </h:panelGrid>
+
+    </ui:composition>
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+</html>

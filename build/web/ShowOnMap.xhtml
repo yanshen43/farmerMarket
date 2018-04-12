@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Map to locate the farmer.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition  template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Map"></h:outputText>
+        </ui:define>
+
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent" >
+            <!-- 
+            PrimeFaces gmap is used to display the VT campus Google map.
+            See http://www.primefaces.org/showcase/ui/data/gmap/basic.xhtml
+            
+            The map is styled under class 'map' in siteStyles.css
+            -->
+            <div align="center" style="width:97%">
+
+                <h:outputLabel class="heading" value="Farmer Market: #{farmController.selected.marketName}"/>
+                <br/><br/> 
+
+                <h:outputLabel class="heading" value="From Virgina Tech to the Farmer market:"/>
+                <br/><br/>
+                
+                <h:outputLabel class="heading" value="Location:"/>
+                <br/><br/>
+
+                <h:outputLabel styleClass="scrollableOutputText" value="X-axis: #{farmgoodsManager.selected.x}"/>
+                <br/><br/>
+
+                <h:outputLabel styleClass="scrollableOutputText"  value="Y-axis: #{farmgoodsManager.selected.y}"/>
+                <br/><br/>
+                <!--p:growl id="growl" showDetail="true" autoUpdate="true" life="4000"/-->
+                <div id="floating-panel">
+                        <b>Mode of Travel: </b>
+                        <select id="mode">
+                            <option value="DRIVING">Driving</option>
+                            <option value="WALKING">Walking</option>
+                            <option value="BICYCLING">Bicycling</option>
+                            <option value="TRANSIT">Transit</option>
+                        </select>
+                </div>
+                
+                <br/><br/>
+                
+                <div id="map" class="map"></div>
+
+                <!-- Name, Latitude, and Longitude of the selected VT building are accessed in map.js -->
+                <h:inputHidden id="buildingName" value="#{farmgoodsManager.selected.marketName}" />
+                <h:inputHidden id="Lat" value="#{farmgoodsManager.selected.y}" />
+                <h:inputHidden id="Long" value="#{farmgoodsManager.selected.x}" />
+
+                    <!--p:gmap center="#{farmgoodsManager.selected.y}, #{farmgoodsManager.selected.x}" zoom="12" type="ROADMAP" style="width:800px;height:400px" model="#{markersView.advancedModel}">
+                    </p:gmap -->
+                <script type="text/javascript">
+                    initializeMap();
+                </script>
+                <!-->
+                <script type="text/javascript">
+                    initializeMap();  // Initialize and display a Google Map of VT campus
+                </script>
+                <-->
+                <h:link outcome="MarketInfo"><i class="fa fa-arrow-left"></i>&nbsp;Go Back&nbsp;&nbsp;</h:link>
+
+            </div>
+        </ui:define>
+
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>

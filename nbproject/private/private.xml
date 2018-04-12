@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/Users/ketian/NetBeansProjects/FarmersMarket/web/FarmersMarkets.xhtml</file>
+            <file>file:/Users/ketian/NetBeansProjects/FarmersMarket/web/MarketInfo.xhtml</file>
+            <file>file:/Users/ketian/NetBeansProjects/FarmersMarket/src/conf/persistence.xml</file>
+            <file>file:/Users/ketian/NetBeansProjects/FarmersMarket/web/WEB-INF/glassfish-web.xml</file>
+            <file>file:/Users/ketian/NetBeansProjects/FarmersMarket/mysql/farmersmarket-s.sql</file>
+            <file>file:/Users/ketian/NetBeansProjects/FarmersMarket/nbproject/build-impl.xml</file>
+            <file>file:/Users/ketian/NetBeansProjects/FarmersMarket/web/ShowOnMap.xhtml</file>
+            <file>file:/Users/ketian/NetBeansProjects/FarmersMarket/web/GoodsList.xhtml</file>
+            <file>file:/Users/ketian/NetBeansProjects/FarmersMarket/web/resources/js/map.js</file>
+            <file>file:/Users/ketian/NetBeansProjects/FarmersMarket/web/CheckOut.xhtml</file>
+            <file>file:/Users/ketian/NetBeansProjects/FarmersMarket/web/WEB-INF/glassfish-resources.xml</file>
+            <file>file:/Users/ketian/NetBeansProjects/FarmersMarket/mysql/farmersmarket.sql</file>
+            <file>file:/Users/ketian/NetBeansProjects/FarmersMarket/src/java/market/mymarket/sessionbeans/GoodslistFacade.java</file>
+        </group>
+    </open-files>
+</project-private>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Created by Yanshen Yang on 2016.09.26
+Copyright © 2016 Yanshen Yang All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+        
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Farmer's Market List"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <div align="center" style="width:97%">
+                <!--
+                PrimeFaces Growl displays messages in an overlay. Place p:growl anywhere on your JSF page. 
+                The location of growl in a JSF page does not matter since the messages are displayed
+                as an overlay. The following will display the messages for 5 seconds and then fade away.
+                -->
+                <p:growl id="growl" life="4000" />
+
+                <h:form id="MarketListForm">
+                    
+                    <p:panel header="Farmer's Markets List">
+
+                        <!-- Read about p:dataTable in the PrimeFaces User Guide and learn about it:
+                        http://www.primefaces.org/docs/guide/primefaces_user_guide_5_3.pdf
+                        
+                        The table is displayed as sorted in the order of database Primary Key (id) values.
+                        farmController-->
+                        <p:dataTable id="datalist" value="#{farmgoodsManager.items}" var="item"
+                                     selectionMode="single" selection="#{farmgoodsManager.selected}"
+                                     paginator="true"
+                                     rowKey="#{item.fmid}"
+                                     rows="10"
+                                     rowsPerPageTemplate="10,20,30,40,50"
+                                     styleClass="dataTable">
+
+                            <p:ajax event="rowSelect"   update="viewButton"/>
+                            <p:ajax event="rowUnselect" update="viewButton"/>
+
+                            <!-- No need for the user to be concerned about the database Primary Key id,
+                            which is auto-generated on the server side. 
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListFarmTitle_fmid}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.fmid}"/>
+                            </p:column>
+                            -->
+
+                            <!-- The "header" and "footer" facets are defined for the p:dataTable. See PrimeFaces
+                            User Guide at http://www.primefaces.org/docs/guide/primefaces_user_guide_5_3.pdf
+                            -->
+
+                            <!-- Clicking the column header redisplays the table as sorted w.r.t. COMPANY TITLE  
+                            in alphabetical order A to Z. Clicking it again reverses the order to Z to A. -->
+                            <p:column sortBy="#{item.marketName}">
+                                <f:facet name="header">
+                                    <h:outputText value="Farmer's Market Name" styleClass="facetHeader"/>
+                                </f:facet>
+                                <h:outputText styleClass="dataFields" value="#{item.marketName}"/>
+                            </p:column>
+
+                            <!-- Clicking the column header redisplays the table as sorted w.r.t. CITY NAME
+                            in alphabetical order A to Z. Clicking it again reverses the order to Z to A. -->
+                            <p:column sortBy="#{item.city}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListFarmTitle_city}" styleClass="facetHeader"/>
+                                </f:facet>
+                                <h:outputText styleClass="dataFields" value="#{item.city}"/>
+                            </p:column>
+
+                            <!-- Clicking the column header redisplays the table as sorted w.r.t. STATE NAME
+                            in alphabetical order A to Z. Clicking it again reverses the order to Z to A. -->
+                            <p:column sortBy="#{item.state}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListFarmTitle_state}" styleClass="facetHeader"/>
+                                </f:facet>
+                                <h:outputText styleClass="dataFields" value="#{item.state}"/>
+                            </p:column>
+
+                            <!-- Clicking the column header redisplays the table as sorted w.r.t. POSTAL CODE
+                            in alphabetical order A to Z. Clicking it again reverses the order to Z to A. -->
+                            <p:column sortBy="#{item.zip}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListFarmTitle_zip}" styleClass="facetHeader"/>
+                                </f:facet>
+                                <h:outputText styleClass="dataFields" value="#{item.zip}"/>
+                            </p:column>
+
+                            <!-- Clicking the column header redisplays the table as sorted w.r.t. COUNTRY NAME
+                            in alphabetical order A to Z. Clicking it again reverses the order to Z to A. -->
+                            <p:column sortBy="#{item.season1Date}">
+                                <f:facet name="header">
+                                    <h:outputText value="Open Date" styleClass="facetHeader"/>
+                                </f:facet>
+                                <h:outputText styleClass="dataFields" value="#{item.season1Date}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.season1Time}">
+                                <f:facet name="header">
+                                    <h:outputText value="Open Time" styleClass="facetHeader"/>
+                                </f:facet>
+                                <h:outputText styleClass="dataFields" value="#{item.season1Time}"/>
+                            </p:column> 
+                            <!-- Clicking the column header redisplays the table as sorted w.r.t. PHONE NUMBER
+                            in alphabetical order A to Z. Clicking it again reverses the order to Z to A. -->
+                            <p:column sortBy="#{item.organic}">
+                                <f:facet name="header">
+                                    <h:outputText value="Organic Food" styleClass="facetHeader"/>
+                                </f:facet>
+                                <h:outputText styleClass="dataFields" value="#{item.organic}"/>
+                            </p:column>
+
+                            <!--
+                            The "header" and "footer" facets are defined for the p:dataTable. See PrimeFaces
+                            documentation at http://www.primefaces.org/docs/guide/primefaces_user_guide_5_3.pdf
+                            -->
+
+                            <f:facet name="footer">
+                               
+                                <p:commandButton id="viewButton"  icon="ui-icon-document" value="#{bundle.View}" 
+                                                 styleClass="commandButton" action ="MarketInfo.xhtml?faces-redirect=true"
+                                                 disabled="#{empty farmgoodsManager.selected}">
+                                </p:commandButton>               
+                                                                 
+                                <!--<p:commandButton id="searchButton" icon="ui-icon-search" value="#{bundle.Search}" 
+                                                 styleClass="commandButton" update=":FarmSearchForm" 
+                                                 oncomplete="PF('FarmSearchDialog').show()"/>-->
+
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+
+
+            </div>
+        </ui:define>
+        
+    </ui:composition>
+
+</html>

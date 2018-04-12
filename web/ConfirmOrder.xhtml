@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Zhen Guo on 2016.11.03 
+Copyright © 2016 Zhen Guo. All rights reserved.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Order Confirmation"></h:outputText>
+        </ui:define>
+        
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            
+            <div align="center" style="width:50%; margin:0 auto;">
+                
+                <!-- This form displays the Pizza Hut logo and lists the order details -->
+                <h:form id="OrderConfirmation">
+                    
+                    <h:graphicImage url="#{resource['images:PizzaHutLogo.png']}" width="255px" height="64px"  alt="Logo"/>
+                    <br/><br/>
+                    Thank You <strong>#{accountManager.selected.firstName} #{accountManager.selected.lastName}</strong> for your order!
+                    <br/><br/><br/>
+                    Your Credit Card Number ***<strong>#{accountManager.selected.ccNumberLast4Digits()}</strong> is charged 
+                    <strong>$#{priceManager.totalCost}</strong> including <strong>#{100 * priceManager.salesTax}%</strong> sales tax 
+                    for the <strong>#{priceManager.pizzaSize}</strong> 
+                    size <strong>#{priceManager.pizzaCrustType}</strong> pizza with the following toppings:
+                    <br/><br/>
+                    <strong>#{priceManager.toppings}</strong>
+                    <br/><br/>
+                    Your pizza will be delivered to your following address:
+                    <br/><br/>
+                    <strong>#{accountManager.selected.address1} #{accountManager.selected.address2}, 
+                        #{accountManager.selected.city}, #{accountManager.selected.state}
+                        #{accountManager.selected.zipcode}</strong>
+                    <br/><br/>
+                    Thank You for Choosing Pizza Hut!
+                    <br/><br/>
+                    <p:commandButton id="home" type="submit" value="Home" icon="ui-icon-home" 
+                                     action="#{accountManager.showHomePage()}" ajax="false" >
+                        
+                        <!-- f:actionListener registers a javax.faces.event.ActionListener instance with the component. 
+                        An ActionListener is an event handler interface for a class that can respond to user events in your JSF page.
+                        When the p:commandButton is clicked, JSF will invoke the method priceManager.clearOrder(). 
+                        The body content of this tag must be empty. -->
+                        <f:actionListener binding="#{priceManager.clearOrder()}" />
+                    </p:commandButton>
+
+                    <p:commandButton id="newOrder" type="submit" value="Start a New Order" icon="ui-icon-arrowthick-1-w" 
+                                     action="#{accountManager.showPrepareOrder()}" ajax="false" >
+                        <f:actionListener binding="#{priceManager.clearOrder()}" />
+                    </p:commandButton>
+
+                    <p:commandButton id="logOut" type="submit" value="Sign Out" icon="ui-icon-arrowthick-1-w" 
+                                     action="#{accountManager.logout()}" ajax="false" />
+
+                </h:form>
+                <br/><br/><br/>
+            </div>
+        </ui:define>
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>
